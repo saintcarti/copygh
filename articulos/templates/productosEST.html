@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+{% load static %}
+
+<main role="main" class="container">
+    <div>
+        <h2 class="lead" style="color: #596272"><strong>Articulos</strong></h2><br>
+        <div class="row">
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/ASEIENTO ADULTO 2.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">ASIENTO ADULTO</h4>
+                        <p class="card-text">Precio: $12.990 <br></p>
+                        <form class="add-to-cart-form" method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto.productoId }}">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/ASIENTO NIÑO2 .png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">ASIENTO NIÑO</h4>
+                        <p class="card-text">Precio: $9.990 <br></p>
+                        <form class="add-to-cart-form" method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto.productoId }}">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/GUANTES 1.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">GUANTES AMARILLOS</h4>
+                        <p class="card-text">Precio: $6.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="3">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/GUANTES 2.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">GUANTES NEGROS</h4>
+                        <p class="card-text">Precio: $6.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="4">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/GUANTES 3.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">GUANTES BLANCOS</h4>
+                        <p class="card-text">Precio: $6.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="5">
+                            <a href="{% url 'agregar_producto' id=19 %}" id="btn_comprar" class="btn btn-primary">Agregar Al carrito</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/LUBRICANTE.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">LUBRICANTE PEQUEÑO</h4>
+                        <p class="card-text">Precio: $7.490 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="6">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/LUZ.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">LUZ LED TRASERA</h4>
+                        <p class="card-text">Precio: $4.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="7">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/ASIENTO.PNG' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">ASIENTO SOFT</h4>
+                        <p class="card-text">Precio: $13.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="8">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/CANASTA.PNG' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">CANASTA DELANTERA</h4>
+                        <p class="card-text">Precio: $7.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="9">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/CASCO.PNG' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">CASCO ADULTO</h4>
+                        <p class="card-text">Precio: $11.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="10">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/PROTECCION 1.png' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">KIT PROTECCION</h4>
+                        <p class="card-text">Precio: $12.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="11">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/PARCHES.PNG' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">PARCHES DOUBLE</h4>
+                        <p class="card-text">Precio: $12.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="12">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card text-center">
+                    <img class="card-img-top mx-auto" src="{% static 'img/CADENA 10S.PNG' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">CADENA 10S 116L</h4>
+                        <p class="card-text">Precio: $12.990 <br></p>
+                        <form class="add-to-cart-form">
+                            <input type="hidden" name="producto_id" value="13">
+                            <button type="submit" class="btn btn-primary col-12">Añadir al carro</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="{% static 'js/add_to_cart.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartForms = document.querySelectorAll('.add-to-cart-form');
+    addToCartForms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const productoId = this.querySelector('input[name="producto_id"]').value;
+            addToCart(productoId);
+        });
+    });
+
+    function addToCart(productoId) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+        if (cart[productoId]) {
+            cart[productoId]++;
+        } else {
+            cart[productoId] = 1;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Producto añadido al carro');
+    }
+});
+</script>
+
+<div class="col-4">
+    {%include "crud/carrito.html"%}
+</div>
+
+{% endblock %}

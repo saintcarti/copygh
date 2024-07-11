@@ -1,0 +1,123 @@
+{% load static %}
+<div id="carrito" class="carrito-posicion">
+    <div role="alert">
+        <table class="table table-bordered alert alert-warning">
+            <thead>
+                <tr scope="row" class="text-center">
+                    <td colspan="3" style="font-weight:bold; font-size: 18px;">Carrito</td>
+                </tr>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">NOMBRE</td>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">PRECIO</td>
+                <td style="font-size:15px; font-weight: bold; color:black; text-align: center;">CANTIDAD</td>
+            </thead>
+            <tbody>
+                {% if request.session.carrito %}
+                    {% for key, value in request.session.carrito.items %}
+                        {%if value.cantidad > 0 %}
+                        <tr>
+                            <td id="" style="font-size:13px;">{{ value.nombre }}</td>
+                            <td id="precio_value" style="font-size:13px;">{{ value.precio }}</td>
+                            <td id="cantidad_value" style="font-size:13px;">{{ value.cantidad }}
+                                <br>
+                                <a href="{% url 'agregar_producto' value.productoId %}">+</a>
+                                <a id="btn_restar" href="{% url 'producto_borrar' value.productoId %}">-</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total: </th>
+                            <td colspan="2">$ {{ value.total }}</td>
+                        </tr>
+                        {%endif%}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="alert alert-info text-center" style="font-weight: bold;">Sin productos</div>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <hr>
+        <div class="row text-center">
+            <div class="col-6">
+                <a href="{% url 'limpiar' %}" class="btn btn-outline-warning">Limpiar</a>
+            </div>
+            <div class="col-6">
+                <a href="{% url 'generarBoleta' %}" id="btn_comprar" class="btn btn-outline-primary">Comprar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    .carrito-posicion {
+        position: fixed;
+        top: 0;
+        margin-top: 66px;
+        right: 0;
+        width: 300px;
+        max-height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('btn_comprar');
+        const cantidad = document.getElementById('cantidad_value');
+        const precio = document.getElementById('precio_value');
+        
+        if (!cantidad && !precio ) {
+            Swal.fire({
+                title: 'Carrito vacío',
+                text: 'No hay productos en el carrito',
+                icon: 'info',
+                confirmButtonText: 'Aceptar'
+            });
+            btn.disabled = true;
+        } else {
+            btn.disabled = false;
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const restarButtons = document.querySelectorAll('#btn_restar');
+        
+        restarButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productoId = button.getAttribute('data-id');
+                const cantidad = parseInt(button.getAttribute('data-cantidad'));
+
+                if (cantidad > 1) {
+                    fetch(`/restar_del_carrito/${productoId}/`, {
+                        method: 'GET'
+                    }).then(response => {
+                        if (response.ok) {
+                            const productoDiv = document.querySelector(`.producto[data-id="${productoId}"]`);
+                            const cantidadSpan = productoDiv.querySelector('#cantidad_value');
+                            cantidadSpan.textContent = cantidad - 1;
+                            button.setAttribute('data-cantidad', cantidad - 1);
+                        }
+                    });
+                } else {
+                    fetch(`/eliminar_del_carrito/${productoId}/`, {
+                        method: 'GET'
+                    }).then(response => {
+                        if (response.ok) {
+                            const productoDiv = document.querySelector(`.producto[data-id="${productoId}"]`);
+                            productoDiv.remove();
+                        }
+                    });
+                }
+            });
+
+            if (parseInt(button.getAttribute('data-cantidad')) <= 0) {
+                button.disabled = true;
+            }
+        });
+    });
+</script>

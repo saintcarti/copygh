@@ -1,0 +1,56 @@
+
+{% extends 'base.html' %}
+
+{% block contenido %}
+{% load static %}
+<div class="container mt-4">
+    <h2>Listado de productos:</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Precio</th>
+                        <th>Marca</th>
+                        <th>Stock</th>
+                        <th>Ver Detalle</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td style="padding: 20px;" scope="row">{{ producto.productoId }}</td>
+                        <td style="padding: 20px;" scope="row">{{ producto.nombre }}</td>
+                        <td style="padding: 20px;" scope="row">
+                            <a><img src="{{ producto.imagen.url }}" class="img-fluid" style="max-width: 200px; max-height: 200px;"></a>
+                        </td>
+                        <td style="padding: 20px;" scope="row">{{ producto.precio }}</td>
+                        <td style="padding: 20px;" scope="row">{{ producto.nombreMarca }}</td>
+                        <td style="padding: 20px;" scope="row">{{ producto.stock }}</td>
+                        <td style="padding: 20px;" scope="row">
+                            <a href="{% url 'producto_detalle' id=producto.productoId %}" class="btn btn-sm btn-primary">Ver</a>
+                        </td>
+                        <td style="padding: 20px;" scope="row">
+                            <a href="{% url 'producto_editar' id=producto.productoId %}" class="btn btn-sm btn-warning">Editar</a>
+                        </td>
+                        <td style="padding: 20px;" scope="row">
+                            <a href="{% url 'producto_borrar' pk=producto.productoId %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-right mt-3">
+                <a class="btn btn-primary" href="{% url 'producto_nuevo' %}">Crear producto</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

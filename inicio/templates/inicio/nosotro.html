@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+
+{%block contenido%}
+{%load static%}
+
+<div class="row jumbotron" id="Nosotros">
+    <div class="col-lg-6">
+        <div>
+            <h1>Sobre nosotros</h1><br>
+            <p>
+                Somos un local establecido en Calle el peral Rapel, 3230000 Navidad, O'Higgins,
+                donde podrás encontrar a la venta muy buenas bicicletas, repuestos y accesorios.
+                Contamos con servicio a domicilio solo para la VI región y pensamos expandirnos
+                a lo largo de todo Chile.
+                <br> <br> 
+                Para más información puedes contactarnos a traves de nuestras redes sociales como 
+                Instagram y Facebook.
+                <br> <br>
+                Puedes acceder al mapa para ver con exactitud la ubicación de nuestro local.
+                <br><br><br>
+                
+                <a href="https://www.google.com/maps/place/PALMABIKE/@-33.9471005,-71.7383682,17z/data=!3m1!4b1!4m6!3m5!1s0x9663cf4c59c6428f:0xd98aca3b672cdd11!8m2!3d-33.9471005!4d-71.7383682!16s%2Fg%2F11sfw11n0l?entry=ttu" 
+                    target="_blank" class="btn btn-primary col-6">Ir al Mapa</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <img src="{%static 'img/Sucursal real.png'%}" style="width: 480px; height: 420px;" alt="Quiénes Somos" class="img-fluid">
+    </div>
+</div>
+
+<hr>
+
+<div class="text-center">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d827.4444015331923!2d-71.7394822677202!3d-33.94684764644911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9663cf4c59c6428f%3A0xd98aca3b672cdd11!2sPALMABIKE!5e0!3m2!1ses!2scl!4v1712237295941!5m2!1ses!2scl" 
+width="700" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+{%endblock%}

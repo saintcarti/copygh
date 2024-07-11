@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PalmaBike</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/PalmaBike_Logo.ico' %}">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #enviosGratisBar {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 26px;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="enviosGratisBar">
+        Envíos gratis en productos seleccionados
+    </div>
+    <nav class="navbar navbar-expand-md navbar-light bg-light" id="barraNav">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="mx-auto order-0">
+            <a href="{% url 'Inicio' %}" id="logoBookStop" class="navbar-brand mx-auto">
+                <img src="{% static 'img/PalmaBike_Logo.png' %}" alt="logoPalmaBike" width="55px">PalmaBike
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tienda' %}">Artículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Nosotros' %}">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lista_productos' %}">Productos</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Buscar Productos/Marcas" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="btnBuscar">Buscar</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="content">
+        {% block contenido %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <div class="row col-12">
+            <div class="col-lg-2">
+                <img src="{% static 'img/PalmaBike_Logo.png' %}" alt="logoPalmaBike" width="150px">
+            </div>
+            <hr><br>
+            <div class="col-lg-2">
+                <strong>Síguenos</strong>
+                <br><br>
+                <div class="row">
+                    <a href="https://www.facebook.com/people/PalmaBike/100040408189576/">
+                        <img src="{% static 'img/Facebook logo.png' %}" alt="" width="30px" height="30px" style="margin-left: 10px;">
+                    </a>
+                    <a href="https://www.instagram.com/palmabike/?hl=es">
+                        <img src="{% static 'img/Intra.png' %}" alt="" width="30px" height="30px" style="margin-left: 10px;">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <strong>Contacto</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/location.png' %}" alt="" width="20px" height="20px" style="margin-right: 10px; margin-left: 15px;">
+                    <p>Calle el peral Rapel, 3230000 Navidad, O'Higgins</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/fono.png' %}" alt="" width="20px" height="20px" style="margin-right: 10px; margin-left: 15px;">
+                    <p>+56989138179</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/fono.png' %}" alt="" width="20px" height="20px" style="margin-right: 10px; margin-left: 15px;">
+                    <p>PalmaBike@gmail.com</p>
+                </div>
+                <br><br><br>
+                <p>&copy; PalmaBike - 2023</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

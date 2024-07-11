@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+
+{%block contenido%}
+{%load static%}
+{%load crispy_forms_tags%}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding-top: 50px;
+        }
+        .login-form {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .login-form h2 {
+            margin-bottom: 20px;
+        }
+        .login-form .btn {
+            background-color: #28a745;
+            color: white;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form method="post" class="loginForm">
+            {% csrf_token %}
+            <h2>Ingresa tus credenciales</h2>
+            <div class="form-group">
+                <label for="id_username">Nombre de usuario</label>
+                <input 
+                type="text"
+                 name="username"
+                  id="id_username"
+                   class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="id_password">Contraseña</label>
+                <input 
+                type="password"
+                 name="password" 
+                 id="id_password" 
+                 class="form-control">
+            </div>
+            <input  type="submit" value="Iniciar sesión" class="btn btn-primary">
+        </form>
+        <a href="{%url 'register'%}">¿No tienes cuenta? Regístrate</a>
+    </div>
+    <br><br><br><br><br>
+</body>
+</html>
+{%endblock%}
