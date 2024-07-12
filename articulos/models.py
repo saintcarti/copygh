@@ -27,8 +27,7 @@ class Boleta(models.Model):
     id_boleta = models.AutoField(primary_key=True, verbose_name="Id Boleta")
     fecha = models.DateTimeField(auto_now_add=True , verbose_name="Fecha")
     total = models.BigIntegerField( verbose_name="Total")
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name="Producto")
-
+    
     def __str__(self):
         return str(self.id_boleta)
 

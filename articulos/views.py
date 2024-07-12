@@ -106,48 +106,44 @@ def ver_carrito(request):
 
 
 def generarBoleta(request):
-    carrito = Carrito(request)
-    if not carrito.carrito:
-        return redirect('vista_usuario/tienda.html')  # Si el carrito está vacío, redirige a la tienda
+    carrito = request.session.get('carrito', None)
+    if not carrito:
+        # Redirigir a una página de error o mostrar un mensaje
+        return render(request, 'carrito/detallecarrito.html', {'error': 'El carrito está vacío.'})
 
-    total_boleta = 0
-    for item in carrito.carrito.values():
-        total_boleta += float(item['precio']) * item['cantidad']
+    precio_total = 0
+    detalles_boleta = []
 
-    boleta = Boleta(fecha=timezone.now(), total=total_boleta)
+    for key, value in carrito.items():
+        precio_total += int(value['precio']) * int(value['cantidad'])
+
+    # Crear la boleta
+    boleta = Boleta(total=precio_total)
     boleta.save()
 
-    productos = []
-    for item in carrito.carrito.values():
-        if 'producto_id' not in item:
-            return redirect('vista_usuario/tienda.html')  # Maneja el caso de error, por ejemplo, redirigiendo a la tienda
-
-        producto_id = item['producto_id']
-        producto = Producto.objects.get(id=producto_id)
-        cantidad = item['cantidad']
-        precio = item['precio']
-        subtotal = cantidad * float(precio)
-
-        detalle_boleta = DetalleBoleta(
-            boleta=boleta,
-            producto=producto,
-            cantidad=cantidad,
-            precio=precio
-        )
-        detalle_boleta.save()
-        productos.append(detalle_boleta)
-
-    carrito.limpiar()  # Limpia el carrito después de generar la boleta
+    # Crear los detalles de la boleta
+    for key, value in carrito.items():
+        producto = Producto.objects.get(productoId=value['productoId'])
+        cant = value['cantidad']
+        subtotal = cant * int(value['precio'])
+        detalle = DetalleBoleta(id_boleta=boleta, id_producto=producto, cantidad=cant, subtotal=subtotal)
+        detalle.save()
+        detalles_boleta.append(detalle)
 
     datos = {
-        'productos': productos,
+        'productos': detalles_boleta,
         'fecha': boleta.fecha,
-        'total': boleta.total
+        'total': boleta.total,
+        'id_boleta': boleta.id_boleta,
     }
-    return render(request, 'carrito/detallecarrito.html', datos)  # Redirige a la tienda después de generar la boleta
 
+    request.session['boleta'] = boleta.id_boleta
 
+    # Vaciar el carrito
+    carrito = Carrito(request)
+    carrito.limpiar()
 
+    return render(request, 'carrito/detallecarrito.html', datos)
 
 
 
