@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .carrito import Carrito
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
+from django.utils import timezone
 
 
 # Create your views here.
@@ -98,39 +99,58 @@ def limpiar_carrito(request):
     carrito.limpiar()
     return redirect('carrito')
 
+
 def ver_carrito(request):
     carrito = Carrito(request)
-    return render(request, 'carrito.html', {'carrito': Carrito.carrito})
+    return render(request, 'vista_usuario/tienda.html', {'productos': Producto.objects.all()})  # Asegura que se renderice toda la tienda con el carrito
+
 
 def generarBoleta(request):
-    if not request.session.get('carrito'):
-        messages.warning(request, 'El carrito está vacío. No puedes generar una boleta sin productos.')
-        return redirect('tienda')  # Redirige a la página del inventario o carrito
+    carrito = Carrito(request)
+    if not carrito.carrito:
+        return redirect('vista_usuario/tienda.html')  # Si el carrito está vacío, redirige a la tienda
 
-    precio_total = 0
-    for key, value in request.session['carrito'].items():
-        precio_total += int(value['precio']) * int(value['cantidad'])
+    total_boleta = 0
+    for item in carrito.carrito.values():
+        total_boleta += float(item['precio']) * item['cantidad']
 
-    boleta = Boleta(total=precio_total)
+    boleta = Boleta(fecha=timezone.now(), total=total_boleta)
     boleta.save()
-    productos = []
 
-    for key, value in request.session['carrito'].items():
-        producto = Producto.objects.get(productoId=value['productoId'])
-        cant = value['cantidad']
-        subtotal = cant * int(value['precio'])
-        detalle = DetalleBoleta(id_boleta=boleta, id_producto=producto, cantidad=cant, subtotal=subtotal)
-        detalle.save()
-        productos.append(detalle)
+    productos = []
+    for item in carrito.carrito.values():
+        if 'producto_id' not in item:
+            return redirect('vista_usuario/tienda.html')  # Maneja el caso de error, por ejemplo, redirigiendo a la tienda
+
+        producto_id = item['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        cantidad = item['cantidad']
+        precio = item['precio']
+        subtotal = cantidad * float(precio)
+
+        detalle_boleta = DetalleBoleta(
+            boleta=boleta,
+            producto=producto,
+            cantidad=cantidad,
+            precio=precio
+        )
+        detalle_boleta.save()
+        productos.append(detalle_boleta)
+
+    carrito.limpiar()  # Limpia el carrito después de generar la boleta
 
     datos = {
         'productos': productos,
+        'fecha': boleta.fecha,
         'total': boleta.total
     }
-    
-    request.session['boleta'] = boleta.id_boleta
-    carrito = Carrito(request)
-    carrito.limpiar()
-    return render(request,'carrito/detallecarrito.html',datos)
+    return render(request, 'carrito/detallecarrito.html', datos)  # Redirige a la tienda después de generar la boleta
+
+
+
+
+
+
+
 
 
