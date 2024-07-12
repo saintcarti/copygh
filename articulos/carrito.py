@@ -1,4 +1,4 @@
-
+from .models import Producto
 class Carrito:
     def __init__(self, request):
         self.request = request
@@ -47,14 +47,33 @@ class Carrito:
             self.guardar_carrito()
     
     def restar(self, producto):
-        producto_id = str(producto.productoId)
-        if producto_id in self.carrito:
-            self.carrito[producto_id]["cantidad"] -= 1
-            self.carrito[producto_id]["total"] -= producto.precio
-            if self.carrito[producto_id]["cantidad"] < 1:
-                self.eliminar(producto)
-            self.guardar_carrito()
+        producto.productoId = str(producto.productoId)
+        for key , value in self.carrito.items():
+            if key == producto.productoId:
+                value["cantidad"] -= 1
+                value["total"] = int(value["total"]) - producto.precio
+                producto.stock += 1
+                producto.save()
+                if value["cantidad"] <1:
+                    self.eliminar(producto)
+                break
+        self.guardar_carrito()
 
     def limpiar(self):
+        for key , value in self.carrito.items():
+            producto = Producto.objects.get(productoId = int(key))
+            producto.stock += value["cantidad"]
+            producto.save()
+        self.session["carrito"] = {}
+        self.session.modified = True
+
+    def vaciar(self):
+        for key , value in self.carrito.items():
+            print("Entra a vaciar")
+            producto = Producto.objects.get(productoId = int(key))
+            print(producto.stock)
+            if producto.stock <=0:
+                producto.stock = 0
+            producto.save()
         self.session["carrito"] = {}
         self.session.modified = True

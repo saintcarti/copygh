@@ -88,10 +88,10 @@ def eliminar_del_carrito(request, producto_id):
     carrito.eliminar(producto)
     return redirect('carrito')
 
-def restar_del_carrito(request, producto_id):
-    producto = get_object_or_404(Producto, productoId=producto_id)
+def restar_del_carrito(request, id):
     carrito = Carrito(request)
-    carrito.restar(producto)
+    producto = Producto.objects.get(productoId=id)
+    carrito.restar(producto = producto)
     return redirect('carrito')
 
 def limpiar_carrito(request):
@@ -141,7 +141,7 @@ def generarBoleta(request):
 
     # Vaciar el carrito
     carrito = Carrito(request)
-    carrito.limpiar()
+    carrito.vaciar()
 
     return render(request, 'carrito/detallecarrito.html', datos)
 

@@ -20,7 +20,7 @@
                             <td id="cantidad_value" style="font-size:13px;">{{ value.cantidad }}
                                 <br>
                                 <a href="{% url 'agregar_producto' value.productoId %}">+</a>
-                                <a id="btn_restar" href="{% url 'producto_borrar' value.productoId %}">-</a>
+                                <a  href="{% url 'restar_producto' value.productoId %}">-</a>
                             </td>
                         </tr>
                         <tr>
