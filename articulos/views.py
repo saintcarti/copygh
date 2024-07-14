@@ -8,6 +8,7 @@ from .carrito import Carrito
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -72,8 +73,18 @@ def producto_borrar(request, pk):
 
 @login_required
 def tienda(request):
-    producto = Producto.objects.all()
-    return render(request, 'vista_usuario/tienda.html', {'productos': producto})
+    productos_list = Producto.objects.all()
+    paginator = Paginator(productos_list, 12) 
+    page = request.GET.get('page')
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    return render(request, 'vista_usuario/tienda.html', {'productos': productos})
 
 
 def agregar_producto(request, id):
@@ -143,6 +154,7 @@ def generarBoleta(request):
     carrito = Carrito(request)
     carrito.vaciar()
 
+<<<<<<< HEAD
     return render(request, 'carrito/detallecarrito.html', datos)
 
 
@@ -151,3 +163,6 @@ def generarBoleta(request):
 
 
 
+=======
+    return render(request, 'carrito/detallecarrito.html', datos)
+>>>>>>> 8a1b6f96970a48185d4733ab4089ac1512df9c4c
