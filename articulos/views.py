@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseForbidden
 from .models import Producto, Marca, Boleta,DetalleBoleta
 from .forms import  ProductoForm
@@ -144,6 +144,7 @@ def generarBoleta(request):
     carrito.vaciar()
 
     return render(request, 'carrito/detallecarrito.html', datos)
+
 
 
 
