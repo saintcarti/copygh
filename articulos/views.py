@@ -54,7 +54,7 @@ def producto_editar(request, id):
         form = ProductoForm(request.POST, request.FILES, instance=producto)
         if form.is_valid():
             form.save()
-            return redirect('inicio')  # Redirige a la página principal o lista de productos
+            return redirect('lista_productos')  # Redirige a la página principal o lista de productos
     else:
         form = ProductoForm(instance=producto)
 
