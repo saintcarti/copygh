@@ -154,7 +154,6 @@ def generarBoleta(request):
     carrito = Carrito(request)
     carrito.vaciar()
 
-<<<<<<< HEAD
     return render(request, 'carrito/detallecarrito.html', datos)
 
 
@@ -163,6 +162,3 @@ def generarBoleta(request):
 
 
 
-=======
-    return render(request, 'carrito/detallecarrito.html', datos)
->>>>>>> 8a1b6f96970a48185d4733ab4089ac1512df9c4c
